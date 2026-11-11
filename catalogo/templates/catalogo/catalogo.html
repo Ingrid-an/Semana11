@@ -1,0 +1,52 @@
+{% extends "catalogo/base.html" %}
+
+{% block titulo %}{{ titulo }} · Vivero Raíces Verdes{% endblock %}
+
+{% block contenido %}
+  <h2 style="color:#2f5233; margin-bottom:1.25rem;">{{ titulo }}</h2>
+
+  {# {% if %}: muestra la tabla solo si hay plantas, o un aviso si no #}
+  {% if plantas %}
+    <table style="width:100%; border-collapse:collapse; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 8px 24px -16px rgba(47,82,51,0.4);">
+      <thead>
+        <tr style="background:#2f5233; color:#fff; text-align:left;">
+          <th style="padding:0.8rem;">Nombre</th>
+          <th style="padding:0.8rem;">Especie</th>
+          <th style="padding:0.8rem;">Tamaño</th>
+          <th style="padding:0.8rem;">Luz</th>
+          <th style="padding:0.8rem;">Precio</th>
+          <th style="padding:0.8rem;">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# {% for %}: itera cada planta del contexto #}
+        {% for planta in plantas %}
+          <tr style="border-bottom:1px solid #e3ebe0;">
+            {# filtro title: capitaliza; filtro default por si está vacío #}
+            <td style="padding:0.7rem 0.8rem; font-weight:600;">{{ planta.nombre|title }}</td>
+            <td style="padding:0.7rem 0.8rem; font-style:italic; color:#5a6b5d;">{{ planta.especie }}</td>
+            <td style="padding:0.7rem 0.8rem;">{{ planta.tamano_cm }} cm</td>
+            {# get_..._display muestra la etiqueta legible del choice #}
+            <td style="padding:0.7rem 0.8rem;">{{ planta.get_luz_display }}</td>
+            <td style="padding:0.7rem 0.8rem;">S/ {{ planta.precio }}</td>
+            <td style="padding:0.7rem 0.8rem;">
+              {% if planta.disponible %}
+                <span style="background:#e3f3e3; color:#2f7d32; padding:0.15rem 0.6rem; border-radius:999px; font-size:0.78rem; font-weight:600;">Disponible</span>
+              {% else %}
+                <span style="background:#fbe6e4; color:#c0392b; padding:0.15rem 0.6rem; border-radius:999px; font-size:0.78rem; font-weight:600;">Agotado</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p style="margin-top:1rem; color:#5a6b5d; font-size:0.85rem;">
+      Total: {{ plantas|length }} planta{{ plantas|length|pluralize }}.
+    </p>
+  {% else %}
+    <p style="background:#fff; padding:2rem; border-radius:14px; text-align:center; color:#5a6b5d;">
+      Todavía no hay plantas registradas. Agrégalas desde el panel de administración.
+    </p>
+  {% endif %}
+{% endblock %}

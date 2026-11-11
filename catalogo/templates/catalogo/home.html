@@ -1,0 +1,33 @@
+{% extends "catalogo/base.html" %}
+
+{% block titulo %}Inicio · Vivero Raíces Verdes{% endblock %}
+
+{% block contenido %}
+  <section style="text-align:center; padding:2rem 0;">
+    <h2 style="font-size:1.8rem; color:#2f5233; margin-bottom:0.75rem;">
+      Bienvenida a {{ titulo }}
+    </h2>
+    <p style="color:#5a6b5d; max-width:40rem; margin:0 auto 1.5rem;">
+      Plantas de interior y exterior cultivadas con cariño. Explora nuestro
+      catálogo y encuentra la indicada para tu espacio.
+    </p>
+
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <div style="background:#fff; border:1px solid #d8e3d4; border-radius:14px; padding:1.25rem 2rem;">
+        <strong style="font-size:1.8rem; color:#4c8c4a;">{{ total }}</strong>
+        <p style="font-size:0.85rem; color:#5a6b5d;">plantas en catálogo</p>
+      </div>
+      <div style="background:#fff; border:1px solid #d8e3d4; border-radius:14px; padding:1.25rem 2rem;">
+        <strong style="font-size:1.8rem; color:#4c8c4a;">{{ disponibles }}</strong>
+        <p style="font-size:0.85rem; color:#5a6b5d;">disponibles ahora</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">
+      <a href="{% url 'catalogo:lista' %}"
+         style="background:#4c8c4a; color:#fff; padding:0.75rem 1.5rem; border-radius:999px; text-decoration:none; font-weight:600;">
+        Ver catálogo completo →
+      </a>
+    </p>
+  </section>
+{% endblock %}

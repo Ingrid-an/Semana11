@@ -1,0 +1,15 @@
+# Base de datos SQLite (NUNCA commitear, según la guía)
+db.sqlite3
+
+# Cachés de Python
+__pycache__/
+*.pyc
+
+# Entorno virtual
+venv/
+.venv/
+env/
+
+# Configuración de editor
+.vscode/
+.idea/
