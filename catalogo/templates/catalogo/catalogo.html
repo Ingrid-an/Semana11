@@ -1,52 +1,59 @@
 {% extends "catalogo/base.html" %}
 
-{% block titulo %}{{ titulo }} · Vivero Raíces Verdes{% endblock %}
+{% block titulo %}{{ titulo }} · Raíces Verdes{% endblock %}
 
 {% block contenido %}
-  <h2 style="color:#2f5233; margin-bottom:1.25rem;">{{ titulo }}</h2>
+  <div style="display:flex; align-items:baseline; justify-content:space-between; border-bottom:1px solid var(--borde); padding-bottom:1rem; margin-bottom:2.5rem;">
+    <div>
+      <p style="text-transform:uppercase; letter-spacing:0.3em; font-size:0.72rem; color:var(--salvia-osc);">Colección</p>
+      <h2 style="font-size:2.6rem; color:var(--salvia-prof);">{{ titulo }}</h2>
+    </div>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:3rem; color:var(--salvia); font-weight:700;">02</span>
+  </div>
 
-  {# {% if %}: muestra la tabla solo si hay plantas, o un aviso si no #}
   {% if plantas %}
-    <table style="width:100%; border-collapse:collapse; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 8px 24px -16px rgba(47,82,51,0.4);">
-      <thead>
-        <tr style="background:#2f5233; color:#fff; text-align:left;">
-          <th style="padding:0.8rem;">Nombre</th>
-          <th style="padding:0.8rem;">Especie</th>
-          <th style="padding:0.8rem;">Tamaño</th>
-          <th style="padding:0.8rem;">Luz</th>
-          <th style="padding:0.8rem;">Precio</th>
-          <th style="padding:0.8rem;">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        {# {% for %}: itera cada planta del contexto #}
-        {% for planta in plantas %}
-          <tr style="border-bottom:1px solid #e3ebe0;">
-            {# filtro title: capitaliza; filtro default por si está vacío #}
-            <td style="padding:0.7rem 0.8rem; font-weight:600;">{{ planta.nombre|title }}</td>
-            <td style="padding:0.7rem 0.8rem; font-style:italic; color:#5a6b5d;">{{ planta.especie }}</td>
-            <td style="padding:0.7rem 0.8rem;">{{ planta.tamano_cm }} cm</td>
-            {# get_..._display muestra la etiqueta legible del choice #}
-            <td style="padding:0.7rem 0.8rem;">{{ planta.get_luz_display }}</td>
-            <td style="padding:0.7rem 0.8rem;">S/ {{ planta.precio }}</td>
-            <td style="padding:0.7rem 0.8rem;">
-              {% if planta.disponible %}
-                <span style="background:#e3f3e3; color:#2f7d32; padding:0.15rem 0.6rem; border-radius:999px; font-size:0.78rem; font-weight:600;">Disponible</span>
-              {% else %}
-                <span style="background:#fbe6e4; color:#c0392b; padding:0.15rem 0.6rem; border-radius:999px; font-size:0.78rem; font-weight:600;">Agotado</span>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:1.5rem;">
+      {% for planta in plantas %}
+        <article style="background:var(--crema-pura); border:1px solid var(--borde); border-radius:2px; overflow:hidden; display:flex; flex-direction:column;">
+          <!-- "Foto" de la planta (bloque de color con inicial) -->
+          <div style="background:var(--salvia); height:150px; display:flex; align-items:center; justify-content:center; position:relative;">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; color:var(--crema-pura);">{{ planta.nombre|first }}</span>
+            {% if planta.disponible %}
+              <span style="position:absolute; top:0.6rem; right:0.6rem; background:var(--crema-pura); color:var(--salvia-prof); font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; padding:0.2rem 0.6rem;">Disponible</span>
+            {% else %}
+              <span style="position:absolute; top:0.6rem; right:0.6rem; background:#c0392b; color:#fff; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; padding:0.2rem 0.6rem;">Agotado</span>
+            {% endif %}
+          </div>
 
-    <p style="margin-top:1rem; color:#5a6b5d; font-size:0.85rem;">
-      Total: {{ plantas|length }} planta{{ plantas|length|pluralize }}.
+          <div style="padding:1.25rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.4rem; color:var(--salvia-prof); line-height:1.1;">{{ planta.nombre|title }}</h3>
+            <p style="font-style:italic; color:var(--tinta-suave); font-size:0.88rem; margin-bottom:0.75rem;">{{ planta.especie }}</p>
+
+            <div style="font-size:0.82rem; color:var(--tinta-suave); border-top:1px solid var(--borde); padding-top:0.75rem; margin-top:auto;">
+              <p>☀ {{ planta.get_luz_display }}</p>
+              <p>↕ {{ planta.tamano_cm }} cm</p>
+            </div>
+
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--salvia-prof); margin:0.6rem 0;">S/ {{ planta.precio }}</p>
+
+            <!-- Botones CRUD -->
+            <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+              <a href="{% url 'catalogo:editar' planta.pk %}"
+                 style="flex:1; text-align:center; background:var(--salvia-osc); color:var(--crema-pura); text-decoration:none; padding:0.5rem; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em;">Editar</a>
+              <a href="{% url 'catalogo:eliminar' planta.pk %}"
+                 style="flex:1; text-align:center; background:transparent; color:#c0392b; border:1px solid #c0392b; text-decoration:none; padding:0.5rem; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em;">Eliminar</a>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <p style="margin-top:1.5rem; color:var(--tinta-suave); font-size:0.82rem; text-align:center;">
+      {{ plantas|length }} planta{{ plantas|length|pluralize }} en el catálogo
     </p>
   {% else %}
-    <p style="background:#fff; padding:2rem; border-radius:14px; text-align:center; color:#5a6b5d;">
-      Todavía no hay plantas registradas. Agrégalas desde el panel de administración.
+    <p style="background:var(--crema-pura); border:1px solid var(--borde); padding:3rem; text-align:center; color:var(--tinta-suave);">
+      Todavía no hay plantas. <a href="{% url 'catalogo:crear' %}" style="color:var(--salvia-osc);">Agrega la primera →</a>
     </p>
   {% endif %}
 {% endblock %}

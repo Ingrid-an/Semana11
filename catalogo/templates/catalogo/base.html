@@ -3,45 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bloque de título: cada página lo personaliza -->
     <title>{% block titulo %}Vivero Raíces Verdes{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <style>
+      :root {
+        --salvia: #7c8b6f;
+        --salvia-osc: #5c6b50;
+        --salvia-prof: #414d37;
+        --crema: #f4f2ea;
+        --crema-pura: #fbfaf5;
+        --tinta: #2e342a;
+        --tinta-suave: #6a7162;
+        --borde: #e0ddd0;
+      }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font-family: system-ui, -apple-system, sans-serif; background: #f0f5ee; color: #1f2d22; }
+      body {
+        font-family: "Jost", sans-serif;
+        background: var(--crema);
+        color: var(--tinta);
+        line-height: 1.6;
+      }
+      h1, h2, h3, .serif {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+
+      /* Barra superior */
       header {
-        background: linear-gradient(135deg, #2f5233, #4c8c4a);
-        color: #fff; padding: 1.5rem; text-align: center;
+        background: var(--salvia-prof);
+        color: var(--crema-pura);
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
       }
-      header h1 { font-size: 1.6rem; }
-      nav { margin-top: 0.75rem; display: flex; gap: 1rem; justify-content: center; }
+      .marca {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+      .marca span { font-size: 0.7rem; display: block; letter-spacing: 0.3em;
+        text-transform: uppercase; font-family: "Jost", sans-serif; opacity: 0.7; }
+      nav { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
       nav a {
-        color: #fff; text-decoration: none; font-weight: 600; font-size: 0.9rem;
-        padding: 0.3rem 0.9rem; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px;
+        color: var(--crema-pura); text-decoration: none; font-size: 0.82rem;
+        text-transform: uppercase; letter-spacing: 0.12em; padding: 0.4rem 1rem;
+        border: 1px solid rgba(244,242,234,0.3); border-radius: 2px; transition: all 0.2s;
       }
-      nav a:hover { background: rgba(255,255,255,0.18); }
-      main { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+      nav a:hover { background: var(--crema-pura); color: var(--salvia-prof); }
+      nav a.btn-nuevo { background: var(--salvia); border-color: var(--salvia); }
+      nav a.btn-nuevo:hover { background: var(--crema-pura); color: var(--salvia-prof); }
+
+      main { max-width: 1080px; margin: 0 auto; padding: 3rem 2rem; }
+
       footer {
-        text-align: center; padding: 1.5rem; color: #5a6b5d; font-size: 0.82rem;
-        border-top: 1px solid #d8e3d4; margin-top: 2rem;
+        background: var(--salvia-prof); color: var(--crema);
+        text-align: center; padding: 2rem; font-size: 0.78rem;
+        letter-spacing: 0.15em; text-transform: uppercase; margin-top: 3rem;
+      }
+
+      /* Mensajes flash */
+      .flash {
+        background: #e7ede0; border-left: 3px solid var(--salvia);
+        padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.9rem;
+        color: var(--salvia-prof);
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>🌱 Vivero Raíces Verdes</h1>
+      <div class="marca">
+        Raíces Verdes
+        <span>Vivero botánico</span>
+      </div>
       <nav>
         <a href="{% url 'catalogo:home' %}">Inicio</a>
         <a href="{% url 'catalogo:lista' %}">Catálogo</a>
+        <a href="{% url 'catalogo:crear' %}" class="btn-nuevo">+ Nueva planta</a>
+        <a href="/admin/">Admin</a>
       </nav>
     </header>
 
     <main>
-      <!-- Bloque de contenido: lo rellena cada página hija -->
       {% block contenido %}{% endblock %}
     </main>
 
     <footer>
-      Semana 11 · Desarrollo de Aplicaciones Web (IS093A) · Django MTV
+      Semana 11 · Desarrollo de Aplicaciones Web · Django MTV
     </footer>
   </body>
 </html>

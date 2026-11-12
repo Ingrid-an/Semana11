@@ -1,33 +1,43 @@
 {% extends "catalogo/base.html" %}
 
-{% block titulo %}Inicio · Vivero Raíces Verdes{% endblock %}
+{% block titulo %}Inicio · Raíces Verdes{% endblock %}
 
 {% block contenido %}
-  <section style="text-align:center; padding:2rem 0;">
-    <h2 style="font-size:1.8rem; color:#2f5233; margin-bottom:0.75rem;">
-      Bienvenida a {{ titulo }}
-    </h2>
-    <p style="color:#5a6b5d; max-width:40rem; margin:0 auto 1.5rem;">
-      Plantas de interior y exterior cultivadas con cariño. Explora nuestro
-      catálogo y encuentra la indicada para tu espacio.
-    </p>
+  <!-- Portada tipo revista -->
+  <section style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:2.5rem; align-items:center; margin-bottom:4rem;">
+    <div>
+      <p style="text-transform:uppercase; letter-spacing:0.3em; font-size:0.75rem; color:var(--salvia-osc); margin-bottom:1rem;">Introducción</p>
+      <h1 style="font-size:3.4rem; line-height:1.05; color:var(--salvia-prof); margin-bottom:1.2rem;">
+        Plantas que dan<br />vida a tu espacio
+      </h1>
+      <p style="color:var(--tinta-suave); max-width:32ch; margin-bottom:2rem;">
+        Cultivamos cada planta con cuidado botánico. Explora nuestra colección
+        de especies de interior y exterior, elegidas para durar.
+      </p>
+      <a href="{% url 'catalogo:lista' %}"
+         style="display:inline-block; background:var(--salvia-prof); color:var(--crema-pura); padding:0.9rem 2rem; text-decoration:none; text-transform:uppercase; letter-spacing:0.15em; font-size:0.78rem;">
+        Ver catálogo
+      </a>
+    </div>
+    <div style="background:var(--salvia); aspect-ratio:3/4; border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:7rem;">
+      🌿
+    </div>
+  </section>
 
-    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-      <div style="background:#fff; border:1px solid #d8e3d4; border-radius:14px; padding:1.25rem 2rem;">
-        <strong style="font-size:1.8rem; color:#4c8c4a;">{{ total }}</strong>
-        <p style="font-size:0.85rem; color:#5a6b5d;">plantas en catálogo</p>
+  <!-- Bloque de métricas con número grande estilo revista -->
+  <section style="display:grid; grid-template-columns:auto 1fr; gap:3rem; align-items:center; background:var(--crema-pura); border:1px solid var(--borde); padding:3rem; border-radius:2px;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:6rem; line-height:1; color:var(--salvia); font-weight:700;">
+      01
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+      <div>
+        <p style="font-size:2.6rem; font-family:'Cormorant Garamond',serif; color:var(--salvia-prof);">{{ total }}</p>
+        <p style="text-transform:uppercase; letter-spacing:0.15em; font-size:0.72rem; color:var(--tinta-suave);">Especies en catálogo</p>
       </div>
-      <div style="background:#fff; border:1px solid #d8e3d4; border-radius:14px; padding:1.25rem 2rem;">
-        <strong style="font-size:1.8rem; color:#4c8c4a;">{{ disponibles }}</strong>
-        <p style="font-size:0.85rem; color:#5a6b5d;">disponibles ahora</p>
+      <div>
+        <p style="font-size:2.6rem; font-family:'Cormorant Garamond',serif; color:var(--salvia-prof);">{{ disponibles }}</p>
+        <p style="text-transform:uppercase; letter-spacing:0.15em; font-size:0.72rem; color:var(--tinta-suave);">Disponibles ahora</p>
       </div>
     </div>
-
-    <p style="margin-top:2rem;">
-      <a href="{% url 'catalogo:lista' %}"
-         style="background:#4c8c4a; color:#fff; padding:0.75rem 1.5rem; border-radius:999px; text-decoration:none; font-weight:600;">
-        Ver catálogo completo →
-      </a>
-    </p>
   </section>
 {% endblock %}
